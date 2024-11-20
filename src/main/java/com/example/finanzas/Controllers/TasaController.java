@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasas")
-@CrossOrigin(origins = "https://appweb-finanzas.vercel.app", allowedHeaders = "Authorization")
+@CrossOrigin(origins = "https://finanzastf.onrender.com", allowedHeaders = "Authorization")
 public class TasaController {
 
     @Autowired

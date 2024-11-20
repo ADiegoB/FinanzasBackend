@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/carteras")
-@CrossOrigin(origins = "https://appweb-finanzas.vercel.app", allowedHeaders = "Authorization")
+@CrossOrigin(origins = "https://finanzastf.onrender.com", allowedHeaders = "Authorization")
 public class CarteraController {
     @Autowired
     private ICartera services;

@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/gastos")
-@CrossOrigin(origins = "https://appweb-finanzas.vercel.app", allowedHeaders = "Authorization")
+@CrossOrigin(origins = "https://finanzastf.onrender.com", allowedHeaders = "Authorization")
 public class GastoController {
     @Autowired
     private IGasto services;

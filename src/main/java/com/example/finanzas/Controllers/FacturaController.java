@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/facturas")
-@CrossOrigin(origins = "https://appweb-finanzas.vercel.app", allowedHeaders = "Authorization")
+@CrossOrigin(origins = "https://finanzastf.onrender.com", allowedHeaders = "Authorization")
 public class FacturaController {
 
     @Autowired
