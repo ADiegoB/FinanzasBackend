@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins ="http://localhost:4200")
+@CrossOrigin(origins ="https://appweb-finanzas.vercel.app")
 @RestController
 @RequestMapping("/api")
 public class UsuarioController {
