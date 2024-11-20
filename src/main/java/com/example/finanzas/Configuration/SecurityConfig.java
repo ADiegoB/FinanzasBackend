@@ -50,7 +50,7 @@ public class SecurityConfig  {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         var configuration = new org.springframework.web.cors.CorsConfiguration();
-        configuration.addAllowedOrigin("https://appweb-finanzas.vercel.app"); // Permitir el origen de tu frontend
+        configuration.addAllowedOrigin("https://finanzastf.onrender.com"); // Permitir el origen de tu frontend
         configuration.addAllowedMethod("GET");
         configuration.addAllowedMethod("POST");
         configuration.addAllowedMethod("PUT");
