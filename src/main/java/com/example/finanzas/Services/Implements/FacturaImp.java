@@ -118,20 +118,12 @@ public class FacturaImp implements IFactura {
 
     // Método para calcular los campos de la factura
     public void calcularCamposFactura(Factura factura) {
-
-
         Double valorNominal = factura.getValor_nominal();
-
-
         // Obtener el valor de la tasa usando el repositorio
         Double tasaEfectivaValor = repository.findValorTasaByIdFactura(factura.getId_factura());
-
         if (tasaEfectivaValor == null) {
             throw new RuntimeException("No se encontró el valor de la tasa para la factura con ID: " + factura.getId_factura());
         }
-
-
-
         // Obtener el tipo de tasa usando el repositorio
         String tipoTasa = repository.findTipoTasaByIdFactura(factura.getId_factura());
         if (tipoTasa == null) {
@@ -143,40 +135,28 @@ public class FacturaImp implements IFactura {
             Double resultado = (Math.pow(1 + (tasaEfectivaValor / 100) / 360, 360) - 1) * 100; // Conversión de TNA a TEA
             tasaEfectivaValor = resultado;
         }
-
-
-
         // Si tienes acceso a la fecha de descuento
         LocalDate fechaDescuento = repository.findFechaDescuentoByFacturaId(factura.getId_factura());
         LocalDate fechaVencimiento = factura.getFecha_vencimiento();
         if (fechaDescuento == null || fechaVencimiento == null) {
             throw new RuntimeException("Las fechas de descuento o vencimiento no son válidas.");
         }
-
         // Calcular N: Días entre la fecha de vencimiento y la fecha de descuento
-
         long N = ChronoUnit.DAYS.between(fechaDescuento,fechaVencimiento);// Convertir milisegundos a días
-
         // Tasa efectiva
         Double tasaEfectiva =  ((Math.pow((1 + (tasaEfectivaValor/100)), ((double) N / 360)) - 1));
-
-
         // Tasa descontada
         Double tasaDescontada = tasaEfectiva / (1 + tasaEfectiva);
-
         // Descuento
         Double descuento = valorNominal * tasaDescontada;
-
         // Valor neto
         Double valorNeto = valorNominal - descuento;
-
         // Supongamos que los gastos iniciales y finales son propiedades de la factura
         Double gastosIniciales = factura.getGastos() == null ? 0.0 :
                 factura.getGastos().stream()
                         .filter(gasto -> !gasto.isTipo_gasto()) // Tipo false es gasto inicial
                         .mapToDouble(Gasto::getMonto_gasto)
                         .sum();
-
         Double gastosFinales = factura.getGastos() == null ? 0.0 :
                 factura.getGastos().stream()
                         .filter(Gasto::isTipo_gasto) // Tipo true es gasto final
@@ -184,10 +164,8 @@ public class FacturaImp implements IFactura {
                         .sum();
         // Valor recibido
         Double valorRecibido = valorNeto - gastosIniciales ;
-
         // Valor entregado
         Double valorEntregado = valorNominal + gastosFinales;
-
         // Asignar los valores calculados a la factura
         factura.setTasa_efectiva(tasaEfectiva);
         factura.setTasa_descontada(tasaDescontada);

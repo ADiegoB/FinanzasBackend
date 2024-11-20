@@ -119,17 +119,14 @@ public class CarteraImp implements ICartera {
         // Obtener la cartera
         Cartera cartera = repository.findById(carteraId)
                 .orElseThrow(() -> new RuntimeException("Cartera no encontrada con ID: " + carteraId));
-
         // Obtener las facturas de la cartera
         List<Factura> facturas = facturaRepository.findByCarteraId(carteraId);
-
         // Inicializar los totales
         double totalDescuento = 0.0;
         double totalValorNeto = 0.0;
         double totalValorRecibido = 0.0;
         double totalValorEntregado = 0.0;
         long totalDias = 0;
-
         // Sumar los valores de cada factura en la cartera
         for (Factura factura : facturas) {
             if(factura.isEstado_factura()){
@@ -140,13 +137,10 @@ public class CarteraImp implements ICartera {
                 totalDias += ChronoUnit.DAYS.between(factura.getCartera().getFecha_descuento(), factura.getFecha_vencimiento());
             }
         }
-
-
         // TCEA = ((Valor Entregado / Valor Recibido)^(360 / totalDias)) - 1
         double tcea = (totalValorRecibido > 0 && totalDias > 0)
                 ? 100 * (Math.pow((totalValorEntregado / totalValorRecibido), (360.0 / totalDias)) - 1)
                 : 0.0;
-
         // Crear y devolver el DTO con los totales
         CarteraResumenDTO resumenDTO = new CarteraResumenDTO();
         resumenDTO.setCarteraId(carteraId);
@@ -156,9 +150,6 @@ public class CarteraImp implements ICartera {
         resumenDTO.setTotalValorEntregado(totalValorEntregado);
         resumenDTO.setTotalDias(totalDias);
         resumenDTO.setTcea(tcea);
-
         return resumenDTO;
     }
-
-
 }
